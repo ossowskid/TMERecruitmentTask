@@ -16,6 +16,7 @@ export const CreateObject = () => {
     };
     getData();
   }, []);
+
   useEffect(() => {
     if (names.length < 1) {
       return;
@@ -40,37 +41,74 @@ export const CreateObject = () => {
         plateNumberString = "0" + plateNumber.toString();
       }
       plateNumberString = plateNumber.toString();
-      return randomPlateLetters + plateNumberString;
+      return randomPlateLetters.toUpperCase() + plateNumberString;
     };
+
     const records = [];
     for (let id = 0; id <= 19; id++) {
       const obj = {
-        id,
         plates: randomPlate(),
         firstName: names[id].name.first,
         lastName: names[id].name.last,
         phone: randomPhoneNumber(),
         speed: generateRandomSpeed(60, 200),
-        latlong: "123456",
       };
       records.push(obj);
       setUser(records);
     }
   }, [names, alphabet]);
 
+  const [filterData, setFilterData] = useState("");
+  const [filterType, setFilterType] = useState("");
+  const handleChange = (e) => {
+    e.preventDefault();
+    setFilterData(e.target.value);
+    return filterData;
+  };
+
+  const handleSelect = (e) => {
+    e.preventDefault();
+
+    setFilterType(e.target.value);
+
+    console.log(e, e.value);
+    return filterType;
+  };
+
   return (
     <>
+      <input type="text" onChange={handleChange} />
+      <select onChange={handleSelect}>
+        <option value="">Choose filter</option>
+        <option value="firstName">Name</option>
+        <option value="lastName">Surname</option>
+        <option value="plates">Plate number</option>
+      </select>
+
       {user.map((el, i) => {
-        return (
-          <div key={i}>
-            <div>
-              {el.firstName} {el.lastName}
-            </div>
-            <div>{el.plates}</div>
-            <div>{`+48 ${el.phone}`}</div>
-            <div>{el.speed}</div>
-          </div>
-        );
+        if (filterType === "") {
+          return (
+            <ul key={i}>
+              <li>{`Name: ${el.firstName}`}</li>
+              <li>{`Surname: ${el.lastName}`}</li>
+              <li>{`Plate: ${el.plates}`}</li>
+              <li>{`Phone number: ${el.phone}`}</li>
+              <li>{`Speed: ${el.speed} km/h`}</li>
+            </ul>
+          );
+        }
+        if (el[filterType].toLowerCase().includes(filterData)) {
+          return (
+            <ul key={i}>
+              <li>{`Name: ${el.firstName}`}</li>
+              <li>{`Surname: ${el.lastName}`}</li>
+              <li>{`Plate: ${el.plates}`}</li>
+              <li>{`Phone number: ${el.phone}`}</li>
+              <li>{`Speed: ${el.speed} km/h`}</li>
+            </ul>
+          );
+        }
+        return <div></div>;
       })}
     </>
   );
