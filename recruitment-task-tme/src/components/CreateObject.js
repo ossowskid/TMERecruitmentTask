@@ -16,7 +16,7 @@ export const CreateObject = () => {
   useEffect(() => {
     const getData = async () => {
       const response = await fetch(
-        "https://randomuser.me/api/?results=20&name&inc=name"
+        "https://randomuser.me/api/?results=5000&name&inc=name"
       );
       const data = await response.json();
       setNames(data.results);
@@ -55,7 +55,7 @@ export const CreateObject = () => {
     };
     const recalculate = (coord) => {
       let degree = Math.floor(coord / 3600);
-      console.log(84, coord - degree * 3600);
+
       let minutes = Math.floor((coord - degree * 3600) / 60);
       let seconds = coord - degree * 3600 - minutes * 60;
 
@@ -67,7 +67,7 @@ export const CreateObject = () => {
     };
 
     const records = [];
-    for (let id = 0; id < 20; id++) {
+    for (let id = 0; id < 5000; id++) {
       const obj = {
         plates: randomPlate(),
         coordinates: {
