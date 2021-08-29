@@ -68,10 +68,7 @@ export const CreateObject = () => {
 
   const handleSelect = (e) => {
     e.preventDefault();
-
     setFilterType(e.target.value);
-
-    console.log(e, e.value);
     return filterType;
   };
 
@@ -88,24 +85,34 @@ export const CreateObject = () => {
       {user.map((el, i) => {
         if (filterType === "") {
           return (
-            <ul key={i}>
-              <li>{`Name: ${el.firstName}`}</li>
-              <li>{`Surname: ${el.lastName}`}</li>
-              <li>{`Plate: ${el.plates}`}</li>
-              <li>{`Phone number: ${el.phone}`}</li>
-              <li>{`Speed: ${el.speed} km/h`}</li>
-            </ul>
+            <div key={i}>
+              <div>
+                <img src={`http://picsum.photos/100/100?random=${i}`} alt="" />
+              </div>
+              <div>
+                <div>{`Kierowca: ${el.firstName} ${el.lastName}`}</div>
+                <div>{`Numer rejestracyjny: ${el.plates}`}</div>
+                <div>{`Nr kontaktowy: ${el.phone}`}</div>
+                <div>{`Średnia prędkość: ${el.speed} km/h`}</div>
+              </div>
+              <div>💖</div>
+            </div>
           );
         }
         if (el[filterType].toLowerCase().includes(filterData)) {
           return (
-            <ul key={i}>
-              <li>{`Name: ${el.firstName}`}</li>
-              <li>{`Surname: ${el.lastName}`}</li>
-              <li>{`Plate: ${el.plates}`}</li>
-              <li>{`Phone number: ${el.phone}`}</li>
-              <li>{`Speed: ${el.speed} km/h`}</li>
-            </ul>
+            <div key={i}>
+              <div>
+                <img src={`http://picsum.photos/100/100?random=${i}`} alt="" />
+              </div>
+              <div>
+                <div>{`Kierowca: ${el.firstName} ${el.lastName}`}</div>
+                <div>{`Numer rejestracyjny: ${el.plates}`}</div>
+                <div>{`Nr kontaktowy: ${el.phone}`}</div>
+                <div>{`Średnia prędkość: ${el.speed} km/h`}</div>
+              </div>
+              <div>💖</div>
+            </div>
           );
         }
         return <div></div>;
