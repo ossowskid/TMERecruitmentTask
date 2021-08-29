@@ -3,6 +3,13 @@ import { useEffect, useState } from "react";
 export const CreateObject = () => {
   let alphabet = "abcdefghijklmnoprstuwxyz";
 
+  const coordinates = {
+    latitudeMin: 176400,
+    latitudeMax: 197400,
+    longitudeMin: 50820,
+    longitudeMax: 86940,
+  };
+
   const [user, setUser] = useState([]);
   const [names, setNames] = useState([]);
 
@@ -43,11 +50,43 @@ export const CreateObject = () => {
       plateNumberString = plateNumber.toString();
       return randomPlateLetters.toUpperCase() + plateNumberString;
     };
+    const generateRandomLocation = (min, max) => {
+      return Math.floor(Math.random() * (max - min)) + min;
+    };
+    const recalculate = (coord) => {
+      let degree = Math.floor(coord / 3600);
+      console.log(84, coord - degree * 3600);
+      let minutes = Math.floor((coord - degree * 3600) / 60);
+      let seconds = coord - degree * 3600 - minutes * 60;
+
+      return {
+        degree,
+        minutes,
+        seconds,
+      };
+    };
 
     const records = [];
-    for (let id = 0; id <= 19; id++) {
+    for (let id = 0; id < 20; id++) {
       const obj = {
         plates: randomPlate(),
+        coordinates: {
+          longtitude: generateRandomLocation(
+            coordinates.longitudeMin,
+            coordinates.longitudeMax
+          ),
+          latitude: generateRandomLocation(
+            coordinates.latitudeMin,
+            coordinates.latitudeMax
+          ),
+        },
+        renderLongitude: function () {
+          return recalculate(this.coordinates.longtitude);
+        },
+
+        renderLatitude: function () {
+          return recalculate(this.coordinates.latitude);
+        },
         firstName: names[id].name.first,
         lastName: names[id].name.last,
         phone: randomPhoneNumber(),
@@ -56,7 +95,16 @@ export const CreateObject = () => {
       records.push(obj);
       setUser(records);
     }
-  }, [names, alphabet]);
+  }, [
+    names,
+    alphabet,
+    coordinates.latitudeMax,
+    coordinates.latitudeMin,
+    coordinates.longitudeMin,
+    coordinates.longitudeMax,
+    coordinates.longtitude,
+    coordinates.latitude,
+  ]);
 
   const [filterData, setFilterData] = useState("");
   const [filterType, setFilterType] = useState("");
@@ -72,8 +120,37 @@ export const CreateObject = () => {
     return filterType;
   };
 
+  // const renderLongMax = recalculate(coordinates.longitudeMax);
+  // const renderLongMin = recalculate(coordinates.longitudeMin);
+  // const renderLatMax = recalculate(coordinates.latitudeMax);
+  // const renderLatMin = recalculate(coordinates.latitudeMin);
+
   return (
     <>
+      {/* <p>
+        Polska najdalej wysunięta jest na południu w punkcie:{" "}
+        {renderLatMin.degree}° {renderLatMin.minutes < 10 ? "0" : ""}
+        {renderLatMin.minutes}' {renderLatMin.seconds < 10 ? "0" : ""}
+        {renderLatMin.seconds}''.
+      </p>
+      <p>
+        Polska najdalej wysunięta jest na północ w punkcie:{" "}
+        {renderLatMax.degree}° {renderLatMax.minutes < 10 ? "0" : ""}
+        {renderLatMax.minutes}' {renderLatMax.seconds < 10 ? "0" : ""}
+        {renderLatMax.seconds}''.
+      </p>
+      <p>
+        Polska najdalej wysunięta jest na zachód w punkcie:{" "}
+        {renderLongMin.degree}° {renderLongMin.minutes < 10 ? "0" : ""}
+        {renderLongMin.minutes}' {renderLongMin.seconds < 10 ? "0" : ""}
+        {renderLongMin.seconds}''.
+      </p>
+      <p>
+        Polska najdalej wysunięta jest na wschód w punkcie:{" "}
+        {renderLongMax.degree}° {renderLongMax.minutes < 10 ? "0" : ""}
+        {renderLongMax.minutes}' {renderLongMax.seconds < 10 ? "0" : ""}
+        {renderLongMax.seconds}''.
+      </p> */}
       <input type="text" onChange={handleChange} />
       <select onChange={handleSelect}>
         <option value="">Choose filter</option>
@@ -94,6 +171,19 @@ export const CreateObject = () => {
                 <div>{`Numer rejestracyjny: ${el.plates}`}</div>
                 <div>{`Nr kontaktowy: ${el.phone}`}</div>
                 <div>{`Średnia prędkość: ${el.speed} km/h`}</div>
+                <div>
+                  {`Pozycja samochodu: ${el.renderLatitude().degree}°N ${
+                    el.renderLatitude().minutes < 10 ? "0" : ""
+                  }${el.renderLatitude().minutes}' ${
+                    el.renderLatitude().seconds < 10 ? "0" : ""
+                  }${el.renderLatitude().seconds}'', ${
+                    el.renderLongitude().degree
+                  }°E ${el.renderLongitude().minutes < 10 ? "0" : ""}${
+                    el.renderLongitude().minutes
+                  }' ${el.renderLongitude().seconds < 10 ? "0" : ""}${
+                    el.renderLongitude().seconds
+                  }''`}
+                </div>
               </div>
               <div>💖</div>
             </div>
