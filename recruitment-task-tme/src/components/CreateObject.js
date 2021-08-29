@@ -120,37 +120,8 @@ export const CreateObject = () => {
     return filterType;
   };
 
-  // const renderLongMax = recalculate(coordinates.longitudeMax);
-  // const renderLongMin = recalculate(coordinates.longitudeMin);
-  // const renderLatMax = recalculate(coordinates.latitudeMax);
-  // const renderLatMin = recalculate(coordinates.latitudeMin);
-
   return (
     <>
-      {/* <p>
-        Polska najdalej wysunięta jest na południu w punkcie:{" "}
-        {renderLatMin.degree}° {renderLatMin.minutes < 10 ? "0" : ""}
-        {renderLatMin.minutes}' {renderLatMin.seconds < 10 ? "0" : ""}
-        {renderLatMin.seconds}''.
-      </p>
-      <p>
-        Polska najdalej wysunięta jest na północ w punkcie:{" "}
-        {renderLatMax.degree}° {renderLatMax.minutes < 10 ? "0" : ""}
-        {renderLatMax.minutes}' {renderLatMax.seconds < 10 ? "0" : ""}
-        {renderLatMax.seconds}''.
-      </p>
-      <p>
-        Polska najdalej wysunięta jest na zachód w punkcie:{" "}
-        {renderLongMin.degree}° {renderLongMin.minutes < 10 ? "0" : ""}
-        {renderLongMin.minutes}' {renderLongMin.seconds < 10 ? "0" : ""}
-        {renderLongMin.seconds}''.
-      </p>
-      <p>
-        Polska najdalej wysunięta jest na wschód w punkcie:{" "}
-        {renderLongMax.degree}° {renderLongMax.minutes < 10 ? "0" : ""}
-        {renderLongMax.minutes}' {renderLongMax.seconds < 10 ? "0" : ""}
-        {renderLongMax.seconds}''.
-      </p> */}
       <input type="text" onChange={handleChange} />
       <select onChange={handleSelect}>
         <option value="">Choose filter</option>
