@@ -124,10 +124,10 @@ export const CreateObject = () => {
     <>
       <input type="text" onChange={handleChange} />
       <select onChange={handleSelect}>
-        <option value="">Choose filter</option>
-        <option value="firstName">Name</option>
-        <option value="lastName">Surname</option>
-        <option value="plates">Plate number</option>
+        <option value="">Wybierz filtr</option>
+        <option value="firstName">Imię</option>
+        <option value="lastName">Nazwisko</option>
+        <option value="plates">Numer rejestracyjny</option>
       </select>
 
       {user.map((el, i) => {
@@ -171,6 +171,19 @@ export const CreateObject = () => {
                 <div>{`Numer rejestracyjny: ${el.plates}`}</div>
                 <div>{`Nr kontaktowy: ${el.phone}`}</div>
                 <div>{`Średnia prędkość: ${el.speed} km/h`}</div>
+                <div>
+                  {`Pozycja samochodu: ${el.renderLatitude().degree}°N ${
+                    el.renderLatitude().minutes < 10 ? "0" : ""
+                  }${el.renderLatitude().minutes}' ${
+                    el.renderLatitude().seconds < 10 ? "0" : ""
+                  }${el.renderLatitude().seconds}'', ${
+                    el.renderLongitude().degree
+                  }°E ${el.renderLongitude().minutes < 10 ? "0" : ""}${
+                    el.renderLongitude().minutes
+                  }' ${el.renderLongitude().seconds < 10 ? "0" : ""}${
+                    el.renderLongitude().seconds
+                  }''`}
+                </div>
               </div>
               <div>💖</div>
             </div>
