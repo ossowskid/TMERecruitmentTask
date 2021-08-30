@@ -1,110 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const CreateObject = () => {
-  let alphabet = "abcdefghijklmnoprstuwxyz";
-
-  const coordinates = {
-    latitudeMin: 176400,
-    latitudeMax: 197400,
-    longitudeMin: 50820,
-    longitudeMax: 86940,
-  };
-
-  const [user, setUser] = useState([]);
-  const [names, setNames] = useState([]);
-
-  useEffect(() => {
-    const getData = async () => {
-      const response = await fetch(
-        "https://randomuser.me/api/?results=5000&name&inc=name"
-      );
-      const data = await response.json();
-      setNames(data.results);
-    };
-    getData();
-  }, []);
-
-  useEffect(() => {
-    if (names.length < 1) {
-      return;
-    }
-    const randomPhoneNumber = () => {
-      return Math.floor(Math.random() * 999999999) + 0;
-    };
-    const generateRandomSpeed = (min, max) => {
-      return Math.floor(Math.random() * (max - min)) + min;
-    };
-    const randomPlate = () => {
-      let randomPlateLetters =
-        alphabet[Math.floor(Math.random() * alphabet.length)] +
-        alphabet[Math.floor(Math.random() * alphabet.length)] +
-        alphabet[Math.floor(Math.random() * alphabet.length)];
-      let plateNumber = Math.floor(Math.random() * 999) + 0;
-      let plateNumberString;
-      if (plateNumber < 100) {
-        if (plateNumber < 10) {
-          plateNumberString = "00" + plateNumber.toString();
-        }
-        plateNumberString = "0" + plateNumber.toString();
-      }
-      plateNumberString = plateNumber.toString();
-      return randomPlateLetters.toUpperCase() + plateNumberString;
-    };
-    const generateRandomLocation = (min, max) => {
-      return Math.floor(Math.random() * (max - min)) + min;
-    };
-    const recalculate = (coord) => {
-      let degree = Math.floor(coord / 3600);
-
-      let minutes = Math.floor((coord - degree * 3600) / 60);
-      let seconds = coord - degree * 3600 - minutes * 60;
-
-      return {
-        degree,
-        minutes,
-        seconds,
-      };
-    };
-
-    const records = [];
-    for (let id = 0; id < 5000; id++) {
-      const obj = {
-        plates: randomPlate(),
-        coordinates: {
-          longtitude: generateRandomLocation(
-            coordinates.longitudeMin,
-            coordinates.longitudeMax
-          ),
-          latitude: generateRandomLocation(
-            coordinates.latitudeMin,
-            coordinates.latitudeMax
-          ),
-        },
-        renderLongitude: function () {
-          return recalculate(this.coordinates.longtitude);
-        },
-
-        renderLatitude: function () {
-          return recalculate(this.coordinates.latitude);
-        },
-        firstName: names[id].name.first,
-        lastName: names[id].name.last,
-        phone: randomPhoneNumber(),
-        speed: generateRandomSpeed(60, 200),
-      };
-      records.push(obj);
-      setUser(records);
-    }
-  }, [
-    names,
-    alphabet,
-    coordinates.latitudeMax,
-    coordinates.latitudeMin,
-    coordinates.longitudeMin,
-    coordinates.longitudeMax,
-    coordinates.longtitude,
-    coordinates.latitude,
-  ]);
+  const user = JSON.parse(localStorage.getItem("users"));
 
   const [filterData, setFilterData] = useState("");
   const [filterType, setFilterType] = useState("");
@@ -118,6 +15,19 @@ export const CreateObject = () => {
     e.preventDefault();
     setFilterType(e.target.value);
     return filterType;
+  };
+
+  const recalculate = (coord) => {
+    let degree = Math.floor(coord / 3600);
+
+    let minutes = Math.floor((coord - degree * 3600) / 60);
+    let seconds = coord - degree * 3600 - minutes * 60;
+
+    return {
+      degree,
+      minutes,
+      seconds,
+    };
   };
 
   return (
@@ -143,17 +53,23 @@ export const CreateObject = () => {
                 <div>{`Nr kontaktowy: ${el.phone}`}</div>
                 <div>{`Średnia prędkość: ${el.speed} km/h`}</div>
                 <div>
-                  {`Pozycja samochodu: ${el.renderLatitude().degree}°N ${
-                    el.renderLatitude().minutes < 10 ? "0" : ""
-                  }${el.renderLatitude().minutes}' ${
-                    el.renderLatitude().seconds < 10 ? "0" : ""
-                  }${el.renderLatitude().seconds}'', ${
-                    el.renderLongitude().degree
-                  }°E ${el.renderLongitude().minutes < 10 ? "0" : ""}${
-                    el.renderLongitude().minutes
-                  }' ${el.renderLongitude().seconds < 10 ? "0" : ""}${
-                    el.renderLongitude().seconds
-                  }''`}
+                  {`Pozycja samochodu: ${
+                    recalculate(el.coordinates.latitude).degree
+                  }°N ${
+                    recalculate(el.coordinates.latitude).minutes < 10 ? "0" : ""
+                  }${recalculate(el.coordinates.latitude).minutes}' ${
+                    recalculate(el.coordinates.latitude).seconds < 10 ? "0" : ""
+                  }${recalculate(el.coordinates.latitude).seconds}'', ${
+                    recalculate(el.coordinates.longtitude).degree
+                  }°E ${
+                    recalculate(el.coordinates.longtitude).minutes < 10
+                      ? "0"
+                      : ""
+                  }${recalculate(el.coordinates.longtitude).minutes}' ${
+                    recalculate(el.coordinates.longtitude).seconds < 10
+                      ? "0"
+                      : ""
+                  }${recalculate(el.coordinates.longtitude).seconds}''`}
                 </div>
               </div>
               <div>💖</div>
