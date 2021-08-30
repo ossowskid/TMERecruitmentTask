@@ -114,14 +114,8 @@ export const CreateObject = () => {
         }
         if (el[filterType].toLowerCase().includes(filterData)) {
           return (
-            <Wrapper key={i}>
+            <Wrapper key={el.firstName}>
               <MainBox>
-                <PlatesNumberInformation>
-                  <InformationText>
-                    Numer rejestracyjny:{" "}
-                    <InformationInside>{el.plates}</InformationInside>
-                  </InformationText>
-                </PlatesNumberInformation>
                 <ImageBox>
                   <img
                     src={`http://picsum.photos/100/100?random=${i}`}
@@ -129,6 +123,12 @@ export const CreateObject = () => {
                   />
                 </ImageBox>
                 <SecondBox>
+                  <PlatesNumberInformation>
+                    <InformationText>
+                      Numer rejestracyjny:{" "}
+                      <InformationInside>{el.plates}</InformationInside>
+                    </InformationText>
+                  </PlatesNumberInformation>
                   <InsideBox>
                     <InformationText>
                       Kierowca:{" "}

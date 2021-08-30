@@ -1,12 +1,6 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-  //   display: flex;
-  //   flex-flow: column;
-  //   @media only screen and (max-width: 480px) {
-  //     width: 480px;
-  //   }
-`;
+export const Wrapper = styled.div``;
 
 export const ImageBox = styled.div`
   display: flex;
@@ -14,13 +8,16 @@ export const ImageBox = styled.div`
     width: 50px;
     height: 50px;
   }
+  @media only screen and (max-width: 768px) {
+    width: 75px;
+    height: 75px;
+  } ;
 `;
 
 export const MainBox = styled.div`
   display: flex;
   flex-flow: row;
   margin: 5px 0;
-  width: 80vw;
   background-color: lightgray;
   @media only screen and (max-width: 480px) {
     max-width: 480px;
@@ -54,6 +51,10 @@ export const InformationText = styled.p`
   @media only screen and (max-width: 480px) {
     padding: 0;
     font-size: 6px;
+  }
+  @media only screen and (max-width: 768px) {
+    padding: 3px;
+    font-size: 8px;
   } ;
 `;
 
@@ -61,5 +62,8 @@ export const InformationInside = styled.span`
   font-size: 14px;
   @media only screen and (max-width: 480px) {
     font-size: 8px;
+  }
+  @media only screen and (max-width: 768px) {
+    font-size: 10px;
   } ;
 `;

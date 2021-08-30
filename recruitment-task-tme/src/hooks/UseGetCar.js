@@ -95,5 +95,4 @@ export const useGetCars = () => {
   } else {
     return;
   }
-  //   return user;
 };
