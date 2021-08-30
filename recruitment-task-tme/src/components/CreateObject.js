@@ -1,4 +1,14 @@
 import { useState } from "react";
+import {
+  ImageBox,
+  InformationInside,
+  InformationText,
+  InsideBox,
+  MainBox,
+  PlatesNumberInformation,
+  SecondBox,
+  Wrapper,
+} from "../styled/CreateObject.styled";
 
 export const CreateObject = () => {
   const user = JSON.parse(localStorage.getItem("users"));
@@ -43,66 +53,124 @@ export const CreateObject = () => {
       {user.map((el, i) => {
         if (filterType === "") {
           return (
-            <div key={i}>
-              <div>
-                <img src={`http://picsum.photos/100/100?random=${i}`} alt="" />
-              </div>
-              <div>
-                <div>{`Kierowca: ${el.firstName} ${el.lastName}`}</div>
-                <div>{`Numer rejestracyjny: ${el.plates}`}</div>
-                <div>{`Nr kontaktowy: ${el.phone}`}</div>
-                <div>{`Średnia prędkość: ${el.speed} km/h`}</div>
-                <div>
-                  {`Pozycja samochodu: ${
-                    recalculate(el.coordinates.latitude).degree
-                  }°N ${
-                    recalculate(el.coordinates.latitude).minutes < 10 ? "0" : ""
-                  }${recalculate(el.coordinates.latitude).minutes}' ${
-                    recalculate(el.coordinates.latitude).seconds < 10 ? "0" : ""
-                  }${recalculate(el.coordinates.latitude).seconds}'', ${
-                    recalculate(el.coordinates.longtitude).degree
-                  }°E ${
-                    recalculate(el.coordinates.longtitude).minutes < 10
-                      ? "0"
-                      : ""
-                  }${recalculate(el.coordinates.longtitude).minutes}' ${
-                    recalculate(el.coordinates.longtitude).seconds < 10
-                      ? "0"
-                      : ""
-                  }${recalculate(el.coordinates.longtitude).seconds}''`}
-                </div>
-              </div>
-              <div>💖</div>
-            </div>
+            <Wrapper key={i}>
+              <MainBox>
+                <ImageBox>
+                  <img
+                    src={`http://picsum.photos/100/100?random=${i}`}
+                    alt=""
+                  />
+                </ImageBox>
+                <SecondBox>
+                  <PlatesNumberInformation>
+                    <InformationText>
+                      Numer rejestracyjny:{" "}
+                      <InformationInside>{el.plates}</InformationInside>
+                    </InformationText>
+                  </PlatesNumberInformation>
+                  <InsideBox>
+                    <InformationText>
+                      Kierowca:{" "}
+                      <InformationInside>
+                        {el.firstName} {el.lastName}
+                      </InformationInside>
+                    </InformationText>
+                    <InformationText>
+                      Nr kontaktowy:{" "}
+                      <InformationInside>{el.phone}</InformationInside>
+                    </InformationText>
+                    <InformationText>
+                      Średnia prędkość:{" "}
+                      <InformationInside>{el.speed}</InformationInside> km/h
+                    </InformationText>
+                    <InformationText>
+                      Pozycja samochodu:
+                      <InformationInside>
+                        {recalculate(el.coordinates.latitude).degree}°N{" "}
+                        {recalculate(el.coordinates.latitude).minutes < 10
+                          ? "0"
+                          : ""}
+                        {recalculate(el.coordinates.latitude).minutes}'{" "}
+                        {recalculate(el.coordinates.latitude).seconds < 10
+                          ? "0"
+                          : ""}
+                        {recalculate(el.coordinates.latitude).seconds}'',{" "}
+                        {recalculate(el.coordinates.longtitude).degree}°E{" "}
+                        {recalculate(el.coordinates.longtitude).minutes < 10
+                          ? "0"
+                          : ""}
+                        {recalculate(el.coordinates.longtitude).minutes}'{" "}
+                        {recalculate(el.coordinates.longtitude).seconds < 10
+                          ? "0"
+                          : ""}
+                        {recalculate(el.coordinates.longtitude).seconds}''
+                      </InformationInside>
+                    </InformationText>
+                  </InsideBox>
+                </SecondBox>
+              </MainBox>
+            </Wrapper>
           );
         }
         if (el[filterType].toLowerCase().includes(filterData)) {
           return (
-            <div key={i}>
-              <div>
-                <img src={`http://picsum.photos/100/100?random=${i}`} alt="" />
-              </div>
-              <div>
-                <div>{`Kierowca: ${el.firstName} ${el.lastName}`}</div>
-                <div>{`Numer rejestracyjny: ${el.plates}`}</div>
-                <div>{`Nr kontaktowy: ${el.phone}`}</div>
-                <div>{`Średnia prędkość: ${el.speed} km/h`}</div>
-                <div>
-                  {`Pozycja samochodu: ${el.renderLatitude().degree}°N ${
-                    el.renderLatitude().minutes < 10 ? "0" : ""
-                  }${el.renderLatitude().minutes}' ${
-                    el.renderLatitude().seconds < 10 ? "0" : ""
-                  }${el.renderLatitude().seconds}'', ${
-                    el.renderLongitude().degree
-                  }°E ${el.renderLongitude().minutes < 10 ? "0" : ""}${
-                    el.renderLongitude().minutes
-                  }' ${el.renderLongitude().seconds < 10 ? "0" : ""}${
-                    el.renderLongitude().seconds
-                  }''`}
-                </div>
-              </div>
-              <div>💖</div>
-            </div>
+            <Wrapper key={i}>
+              <MainBox>
+                <PlatesNumberInformation>
+                  <InformationText>
+                    Numer rejestracyjny:{" "}
+                    <InformationInside>{el.plates}</InformationInside>
+                  </InformationText>
+                </PlatesNumberInformation>
+                <ImageBox>
+                  <img
+                    src={`http://picsum.photos/100/100?random=${i}`}
+                    alt=""
+                  />
+                </ImageBox>
+                <SecondBox>
+                  <InsideBox>
+                    <InformationText>
+                      Kierowca:{" "}
+                      <InformationInside>
+                        {el.firstName} {el.lastName}
+                      </InformationInside>
+                    </InformationText>
+                    <InformationText>
+                      Nr kontaktowy:{" "}
+                      <InformationInside>{el.phone}</InformationInside>
+                    </InformationText>
+                    <InformationText>
+                      Średnia prędkość:{" "}
+                      <InformationInside>{el.speed}</InformationInside> km/h
+                    </InformationText>
+                    <InformationText>
+                      Pozycja samochodu:
+                      <InformationInside>
+                        {recalculate(el.coordinates.latitude).degree}°N{" "}
+                        {recalculate(el.coordinates.latitude).minutes < 10
+                          ? "0"
+                          : ""}
+                        {recalculate(el.coordinates.latitude).minutes}'{" "}
+                        {recalculate(el.coordinates.latitude).seconds < 10
+                          ? "0"
+                          : ""}
+                        {recalculate(el.coordinates.latitude).seconds}'',{" "}
+                        {recalculate(el.coordinates.longtitude).degree}°E{" "}
+                        {recalculate(el.coordinates.longtitude).minutes < 10
+                          ? "0"
+                          : ""}
+                        {recalculate(el.coordinates.longtitude).minutes}'{" "}
+                        {recalculate(el.coordinates.longtitude).seconds < 10
+                          ? "0"
+                          : ""}
+                        {recalculate(el.coordinates.longtitude).seconds}''
+                      </InformationInside>
+                    </InformationText>
+                  </InsideBox>
+                </SecondBox>
+              </MainBox>
+            </Wrapper>
           );
         }
         return <div></div>;
