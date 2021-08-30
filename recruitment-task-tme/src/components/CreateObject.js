@@ -65,13 +65,15 @@ export const CreateObject = () => {
                   <PlatesNumberInformation>
                     <InformationText>
                       Numer rejestracyjny:{" "}
-                      <InformationInside>{el.plates}</InformationInside>
+                      <InformationInside key={el.plates}>
+                        {el.plates}
+                      </InformationInside>
                     </InformationText>
                   </PlatesNumberInformation>
                   <InsideBox>
                     <InformationText>
                       Kierowca:{" "}
-                      <InformationInside>
+                      <InformationInside key={`${el.firstName}${el.lastName}`}>
                         {el.firstName} {el.lastName}
                       </InformationInside>
                     </InformationText>
@@ -114,7 +116,7 @@ export const CreateObject = () => {
         }
         if (el[filterType].toLowerCase().includes(filterData)) {
           return (
-            <Wrapper key={el.firstName}>
+            <Wrapper key={i}>
               <MainBox>
                 <ImageBox>
                   <img
@@ -126,13 +128,15 @@ export const CreateObject = () => {
                   <PlatesNumberInformation>
                     <InformationText>
                       Numer rejestracyjny:{" "}
-                      <InformationInside>{el.plates}</InformationInside>
+                      <InformationInside key={el.plates}>
+                        {el.plates}
+                      </InformationInside>
                     </InformationText>
                   </PlatesNumberInformation>
                   <InsideBox>
                     <InformationText>
                       Kierowca:{" "}
-                      <InformationInside>
+                      <InformationInside key={`${el.firstName}${el.lastName}`}>
                         {el.firstName} {el.lastName}
                       </InformationInside>
                     </InformationText>
